@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -22,7 +23,7 @@ class EventDetailsScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const CivicHeader(trailing: HeaderUser(name: AppConstants.userName)),
+          const CivicHeader(trailing: HeaderUser()),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(56, 20, 56, 32),
@@ -119,7 +120,10 @@ class EventDetailsScreen extends StatelessWidget {
                                 style: AppTextStyles.title(24).copyWith(fontWeight: FontWeight.w700),
                               ),
                               const SizedBox(height: 2),
-                              Text('Assign event-day roles. You can update only your own role.', style: AppTextStyles.body(14)),
+                              Text(
+                                'Assign event-day roles. You can update only your own role.',
+                                style: AppTextStyles.body(14),
+                              ),
                             ],
                           ),
                         ),
@@ -157,10 +161,7 @@ class _MetaItem extends StatelessWidget {
         Container(
           width: 34,
           height: 34,
-          decoration: BoxDecoration(
-            color: AppColors.chip,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(color: AppColors.chip, borderRadius: BorderRadius.circular(8)),
           child: Center(child: Image.asset(icon, width: 17)),
         ),
         const SizedBox(width: 10),
@@ -168,7 +169,10 @@ class _MetaItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: AppTextStyles.body(13, color: AppColors.text, weight: FontWeight.w600)),
+              Text(
+                title,
+                style: AppTextStyles.body(13, color: AppColors.text, weight: FontWeight.w600),
+              ),
               const SizedBox(height: 2),
               Text(subtitle, style: AppTextStyles.body(13)),
             ],
@@ -215,7 +219,10 @@ class _ParticipantRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: AppTextStyles.body(14, color: AppColors.text, weight: FontWeight.w600)),
+                Text(
+                  name,
+                  style: AppTextStyles.body(14, color: AppColors.text, weight: FontWeight.w600),
+                ),
                 const SizedBox(height: 2),
                 Text(email, style: AppTextStyles.body(13)),
               ],
@@ -237,12 +244,18 @@ class _ParticipantRow extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(role, style: AppTextStyles.body(13, color: AppColors.text, weight: FontWeight.w600)),
+                        Text(
+                          role,
+                          style: AppTextStyles.body(13, color: AppColors.text, weight: FontWeight.w600),
+                        ),
                         const Icon(Icons.keyboard_arrow_down, size: 16, color: AppColors.muted),
                       ],
                     ),
                   )
-                : Text(role, style: AppTextStyles.body(13, color: AppColors.text, weight: FontWeight.w600)),
+                : Text(
+                    role,
+                    style: AppTextStyles.body(13, color: AppColors.text, weight: FontWeight.w600),
+                  ),
           ),
         ],
       ),

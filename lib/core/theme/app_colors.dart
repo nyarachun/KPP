@@ -8,4 +8,6 @@ class AppColors {
   static const Color hint = Color(0xFFA89E94);
   static const Color border = Color(0xFFE8E2D9);
   static const Color chip = Color(0xFFF2ECE4);
+  static const Color error = Color(0xFFB3261E);
+  static const Color success = Color(0xFF2E7D4F);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -10,6 +11,9 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final int maxLines;
   final String? rightLabel;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final bool enabled;
 
   const CustomTextField({
     super.key,
@@ -20,6 +24,9 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.maxLines = 1,
     this.rightLabel,
+    this.controller,
+    this.validator,
+    this.enabled = true,
   });
 
   @override
@@ -30,9 +37,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
   late bool _hidden = widget.isPassword;
 
   OutlineInputBorder _border(Color color) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: color),
-      );
+    borderRadius: BorderRadius.circular(12),
+    borderSide: BorderSide(color: color),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +51,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.label, style: AppTextStyles.body(14, color: AppColors.text, weight: FontWeight.w600)),
+            Text(
+              widget.label,
+              style: AppTextStyles.body(14, color: AppColors.text, weight: FontWeight.w600),
+            ),
             if (widget.rightLabel != null) Text(widget.rightLabel!, style: AppTextStyles.body(12)),
           ],
         ),
         const SizedBox(height: 8),
         TextFormField(
+          controller: widget.controller,
           initialValue: widget.initialValue,
+          validator: widget.validator,
+          enabled: widget.enabled,
           obscureText: _hidden,
           minLines: lines,
           maxLines: lines,
@@ -80,7 +93,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 : null,
             border: _border(AppColors.border),
             enabledBorder: _border(AppColors.border),
+            disabledBorder: _border(AppColors.border),
             focusedBorder: _border(AppColors.primary),
+            errorBorder: _border(AppColors.error),
+            focusedErrorBorder: _border(AppColors.error),
           ),
         ),
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -38,7 +39,10 @@ class EventRowCard extends StatelessWidget {
               child: Column(
                 children: [
                   Text(month, style: AppTextStyles.eyebrow(11)),
-                  Text(day, style: AppTextStyles.body(24, color: AppColors.text, weight: FontWeight.w700)),
+                  Text(
+                    day,
+                    style: AppTextStyles.body(24, color: AppColors.text, weight: FontWeight.w700),
+                  ),
                 ],
               ),
             ),
@@ -60,7 +64,10 @@ class EventRowCard extends StatelessWidget {
                   Image.asset('assets/icons/location.png', width: 17),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: Text(location, style: AppTextStyles.body(15, color: AppColors.text, weight: FontWeight.w500)),
+                    child: Text(
+                      location,
+                      style: AppTextStyles.body(15, color: AppColors.text, weight: FontWeight.w500),
+                    ),
                   ),
                   if (onEdit != null)
                     GestureDetector(

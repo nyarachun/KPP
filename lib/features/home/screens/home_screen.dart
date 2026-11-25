@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -13,10 +14,14 @@ import 'event_details_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static const String _userName = AppConstants.userName;
-
-  void _open(BuildContext context, Widget page) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => page));
+  void _open(BuildContext context, Widget page, String name) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => page,
+        settings: RouteSettings(name: name),
+      ),
+    );
   }
 
   @override
@@ -26,12 +31,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CivicHeader(
-            trailing: HeaderUser(
-              name: _userName,
-              onProfile: () => _open(context, const ProfileScreen()),
-            ),
-          ),
+          CivicHeader(trailing: HeaderUser(onProfile: () => _open(context, const ProfileScreen(), '/profile'))),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(48),
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                       CustomButton(
                         text: 'Add event',
                         width: 220,
-                        onPressed: () => _open(context, const CreateEventScreen()),
+                        onPressed: () => _open(context, const CreateEventScreen(), '/create_event'),
                       ),
                     ],
                   ),
@@ -90,8 +90,8 @@ class HomeScreen extends StatelessWidget {
                       title: events[i]['title']!,
                       date: events[i]['date']!,
                       location: events[i]['location']!,
-                      onTap: i == 0 ? () => _open(context, const EventDetailsScreen()) : null,
-                      onEdit: i == 0 ? () => _open(context, const EditEventScreen()) : null,
+                      onTap: i == 0 ? () => _open(context, const EventDetailsScreen(), '/event_details') : null,
+                      onEdit: i == 0 ? () => _open(context, const EditEventScreen(), '/edit_event') : null,
                     ),
                 ],
               ),

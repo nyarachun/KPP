@@ -1,21 +1,36 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_constants.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/back_link.dart';
 import '../../../core/widgets/civicly_header.dart';
 import '../../../core/widgets/custom_button.dart';
+import '../../../core/utils/validators.dart';
 import '../../../core/widgets/custom_text_field.dart';
 
-class EditEventScreen extends StatelessWidget {
+class EditEventScreen extends StatefulWidget {
   const EditEventScreen({super.key});
+
+  @override
+  State<EditEventScreen> createState() => _EditEventScreenState();
+}
+
+class _EditEventScreenState extends State<EditEventScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  void _save() {
+    if (!_formKey.currentState!.validate()) return;
+    FirebaseAnalytics.instance.logEvent(name: 'event_updated');
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          const CivicHeader(trailing: HeaderUser(name: AppConstants.userName)),
+          const CivicHeader(trailing: HeaderUser()),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(48),
@@ -33,59 +48,66 @@ class EditEventScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: 760,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const CustomTextField(label: 'Event name', initialValue: 'Riverside Cleanup'),
-                            const SizedBox(height: 16),
-                            const CustomTextField(
-                              label: 'Description',
-                              maxLines: 3,
-                              initialValue:
-                                  'Help restore the Eastbank River Trail by collecting litter, sorting recyclables, and preparing native planting beds. Supplies and a light lunch are provided.',
-                            ),
-                            const SizedBox(height: 16),
-                            const Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: CustomTextField(
-                                    label: 'Event date',
-                                    icon: 'assets/icons/calendar-grey.png',
-                                    initialValue: 'Saturday, October 5',
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomTextField(
+                                label: 'Event name',
+                                validator: (v) => Validators.required(v, 'Event name'),
+                                initialValue: 'Riverside Cleanup',
+                              ),
+                              const SizedBox(height: 16),
+                              CustomTextField(
+                                label: 'Description',
+                                validator: (v) => Validators.required(v, 'Description'),
+                                maxLines: 3,
+                                initialValue: 'Help restore the Eastbank River Trail by collecting litter, sorting recyclables, and preparing native planting beds. Supplies and a light lunch are provided.',
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: CustomTextField(
+                                      label: 'Event date',
+                                      validator: (v) => Validators.required(v, 'Date'),
+                                      icon: 'assets/icons/calendar-grey.png',
+                                      initialValue: 'Saturday, October 5',
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 16),
-                                Expanded(
-                                  child: CustomTextField(
-                                    label: 'Start time',
-                                    icon: 'assets/icons/clock.png',
-                                    initialValue: '9:00 AM',
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: CustomTextField(
+                                      label: 'Start time',
+                                      validator: (v) => Validators.required(v, 'Start time'),
+                                      icon: 'assets/icons/clock.png',
+                                      initialValue: '9:00 AM',
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 16),
-                                Expanded(
-                                  child: CustomTextField(
-                                    label: 'End time',
-                                    icon: 'assets/icons/clock.png',
-                                    initialValue: '12:00 PM',
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: CustomTextField(
+                                      label: 'End time',
+                                      validator: (v) => Validators.required(v, 'End time'),
+                                      icon: 'assets/icons/clock.png',
+                                      initialValue: '12:00 PM',
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            const CustomTextField(
-                              label: 'Location',
-                              icon: 'assets/icons/location-grey.png',
-                              initialValue: 'Eastbank River Trail — meet at the boathouse',
-                            ),
-                            const SizedBox(height: 16),
-                            CustomButton(
-                              text: 'Save changes',
-                              icon: 'assets/icons/check.png',
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ],
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              CustomTextField(
+                                label: 'Location',
+                                validator: (v) => Validators.required(v, 'Location'),
+                                icon: 'assets/icons/location-grey.png',
+                                initialValue: 'Eastbank River Trail — meet at the boathouse',
+                              ),
+                              const SizedBox(height: 16),
+                              CustomButton(text: 'Save changes', icon: 'assets/icons/check.png', onPressed: _save),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(width: 32),
@@ -100,7 +122,10 @@ class EditEventScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Delete this event', style: AppTextStyles.body(14, color: AppColors.text, weight: FontWeight.w700)),
+                            Text(
+                              'Delete this event',
+                              style: AppTextStyles.body(14, color: AppColors.text, weight: FontWeight.w700),
+                            ),
                             const SizedBox(height: 8),
                             Text(
                               'This permanently removes the event, tasks, and volunteer assignments.',

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "113894923771",
+    "project_id": "kpplabs-393a5",
+    "storage_bucket": "kpplabs-393a5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113894923771:android:115c16cd5063850064bf5e",
+        "android_client_info": {
+          "package_name": "com.example.vol_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW-VrrXDuw9aFqnd0WhBm3T4ptSLoqnKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
